@@ -7,29 +7,34 @@ import RecipeGenerator from './components/RecipeGenerator';
 function App() {
   const [activeTab, setActiveTab] = useState('chat');
 
-  const handleTabChange = (tab) => {
-    //alert(tab)
-    setActiveTab(tab);
-  }
-
   return (
     <div className="App">
-      <button className={activeTab === 'image-generator' ? 'active' : ''}
-        onClick={() => handleTabChange('image-generator')}>
-        Image Generator
-      </button>
-      <button className={activeTab === 'chat' ? 'active' : ''}
-        onClick={() => handleTabChange('chat')}>
-        Chat
-      </button>
-      <button className={activeTab === 'recipe-generator' ? 'active' : ''}
-        onClick={() => handleTabChange('recipe-generator')}>
-        Recipe Generator
-      </button>
+      <div className="app-header">
+        <h1>EasyAI Hub</h1>
+        <p>Chat with AI, generate images, and create recipes — all in one place</p>
+      </div>
+
+      <div className="tab-nav">
+        <button
+          className={activeTab === 'chat' ? 'active' : ''}
+          onClick={() => setActiveTab('chat')}>
+          Chat
+        </button>
+        <button
+          className={activeTab === 'image-generator' ? 'active' : ''}
+          onClick={() => setActiveTab('image-generator')}>
+          Image Generator
+        </button>
+        <button
+          className={activeTab === 'recipe-generator' ? 'active' : ''}
+          onClick={() => setActiveTab('recipe-generator')}>
+          Recipe Generator
+        </button>
+      </div>
 
       <div>
-        {activeTab === 'image-generator' && <ImageGenerator />}
         {activeTab === 'chat' && <ChatComponent />}
+        {activeTab === 'image-generator' && <ImageGenerator />}
         {activeTab === 'recipe-generator' && <RecipeGenerator />}
       </div>
     </div>

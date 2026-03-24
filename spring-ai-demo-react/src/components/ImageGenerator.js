@@ -5,29 +5,57 @@ function ImageGenerator() {
     const [imageUrl, setImageUrl] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const generateImage = async () => {
-        if (!prompt) return;
+    const generateImage = () => {
+        if (!prompt.trim()) return;
         setLoading(true);
-        const encodedPrompt = encodeURIComponent(prompt);
-        const url = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=512&height=512&nologo=true`;
+        setImageUrl('');
+        const encoded = encodeURIComponent(prompt);
+        const url = `https://image.pollinations.ai/prompt/${encoded}?width=768&height=768&nologo=true&seed=${Date.now()}`;
         setImageUrl(url);
-        setLoading(false);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') generateImage();
     };
 
     return (
-        <div className="tab-content">
-            <h2>Generate Image</h2>
-            <input
-                type="text"
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                placeholder="Enter prompt for image"
-            />
-            <button onClick={generateImage}>Generate Image</button>
-            <div className="image-grid">
-                {loading && <p>Generating...</p>}
-                {imageUrl && <img src={imageUrl} alt="Generated" />}
+        <div className="card">
+            <p className="section-title">Image Generator</p>
+            <p className="section-subtitle">Describe what you want to see and we will generate it</p>
+
+            <div className="input-row">
+                <input
+                    type="text"
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="A mountain landscape at dusk"
+                />
+                <button className="btn-primary" onClick={generateImage} disabled={loading}>
+                    {loading ? 'Generating...' : 'Generate'}
+                </button>
             </div>
+
+            {!imageUrl && !loading && (
+                <div className="empty-state">
+                    Your image will appear here
+                </div>
+            )}
+
+            {loading && (
+                <p className="status-text">Generating your image, this may take a few seconds...</p>
+            )}
+
+            {imageUrl && (
+                <div className="image-wrap">
+                    <img
+                        src={imageUrl}
+                        alt="Generated result"
+                        onLoad={() => setLoading(false)}
+                        onError={() => setLoading(false)}
+                    />
+                </div>
+            )}
         </div>
     );
 }
