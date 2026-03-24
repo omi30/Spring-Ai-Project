@@ -4,17 +4,11 @@ function ChatComponent() {
     const [prompt, setPrompt] = useState('');
     const [chatResponse, setChatResponse] = useState('');
 
-<<<<<<< HEAD
     const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 
     const askAI = async () => {
         try {
             const response = await fetch(`${API_URL}/ask-ai?prompt=${prompt}`)
-=======
-    const askAI = async () => {
-        try {
-            const response = await fetch(`http://localhost:8080/ask-ai?prompt=${prompt}`)
->>>>>>> 1966c1b8194a7b2ce9d1c5062e07a20692d4fabd
             const data = await response.text();
             console.log(data);
             setChatResponse(data);
