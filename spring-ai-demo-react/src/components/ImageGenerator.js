@@ -2,19 +2,16 @@ import React, { useState } from "react";
 
 function ImageGenerator() {
     const [prompt, setPrompt] = useState('');
-    const [imageUrls, setImageUrls] = useState([]);
-
-    const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
+    const [imageUrl, setImageUrl] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const generateImage = async () => {
-        try {
-            const response = await fetch(`${API_URL}/generate-image?prompt=${prompt}`)
-            const urls = await response.json();
-            console.log(urls);
-            setImageUrls(urls);
-        } catch (error) {
-            console.error("Error generating image : ", error)
-        }
+        if (!prompt) return;
+        setLoading(true);
+        const encodedPrompt = encodeURIComponent(prompt);
+        const url = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=512&height=512&nologo=true`;
+        setImageUrl(url);
+        setLoading(false);
     };
 
     return (
@@ -28,13 +25,8 @@ function ImageGenerator() {
             />
             <button onClick={generateImage}>Generate Image</button>
             <div className="image-grid">
-                {imageUrls.map((url, index) => (
-                    <img key={index} src={url} alt={`Generated ${index}`} />
-                ))}
-                {[...Array(4 - imageUrls.length)].map((_, index) => (
-                    <div key={index + imageUrls.length}
-                        className="empty-image-slot"></div>
-                ))}
+                {loading && <p>Generating...</p>}
+                {imageUrl && <img src={imageUrl} alt="Generated" />}
             </div>
         </div>
     );
