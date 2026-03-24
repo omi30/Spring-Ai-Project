@@ -4,11 +4,17 @@ function ImageGenerator() {
     const [prompt, setPrompt] = useState('');
     const [imageUrls, setImageUrls] = useState([]);
 
+<<<<<<< HEAD
     const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 
     const generateImage = async () => {
         try {
             const response = await fetch(`${API_URL}/generate-image?prompt=${prompt}`)
+=======
+    const generateImage = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/generate-image?prompt=${prompt}`)
+>>>>>>> 1966c1b8194a7b2ce9d1c5062e07a20692d4fabd
             const urls = await response.json();
             console.log(urls);
             setImageUrls(urls);

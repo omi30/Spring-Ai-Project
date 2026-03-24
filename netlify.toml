@@ -1,10 +1,7 @@
 [build]
   base = "spring-ai-demo-react"
-  publish = "spring-ai-demo-react/build"
+  publish = "build"
   command = "npm run build"
 
 [build.environment]
   NODE_VERSION = "18"
-
-# If your repo root is the react folder, remove the base line above
-# and keep only publish = "build"

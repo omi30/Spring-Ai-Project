@@ -7,11 +7,17 @@ function RecipeGenerator() {
     const [recipe, setRecipe] = useState('');
 
 
+<<<<<<< HEAD
     const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080';
 
     const createRecipe = async () => {
         try {
             const response = await fetch(`${API_URL}/recipe-creator?ingredients=${ingredients}&dietaryRestrictions=${dietaryRestrictions}&cuisine=${cuisine}`)
+=======
+    const createRecipe = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/recipe-creator?ingredients=${ingredients}&dietaryRestrictions=${dietaryRestrictions}&cuisine=${cuisine}`)
+>>>>>>> 1966c1b8194a7b2ce9d1c5062e07a20692d4fabd
             const data = await response.text();
             console.log(data);
             setRecipe(data);
